@@ -12,6 +12,31 @@
     <div class="background layer2"></div>
     <div class="background layer3"></div>
     <div class="ship" id="ship"></div>
+    <div class="hud">
+      <div class="hud-row hud-top">
+        <div class="hud-panel hud-left">
+          <div class="hud-label">SCORE</div>
+          <div class="hud-value" id="scoreValue">0</div>
+        </div>
+        <div class="hud-panel hud-center">
+          <div class="hud-label">CHARGE</div>
+          <div class="hud-bar"><div class="hud-fill" id="chargeFill"></div></div>
+        </div>
+        <div class="hud-panel hud-right">
+          <div class="hud-label">BIG WEAPON</div>
+          <div class="hud-status" id="weaponReady">CHARGING</div>
+        </div>
+      </div>
+      <div class="hud-row hud-bottom">
+        <div class="hud-panel hud-left">
+          <div class="hud-label">HEALTH</div>
+          <div class="hud-bar"><div class="hud-fill" id="healthFill"></div></div>
+        </div>
+        <div class="hud-panel hud-right">
+          <div class="hud-text" id="controlHint">Arrows = Move • Space = Fire</div>
+        </div>
+      </div>
+    </div>
   </div>
   <script src="script.js"></script>
 </body>
