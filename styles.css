@@ -1,0 +1,88 @@
+:root {
+  --bg-color: #050b16;
+  --star-color: #7ce0ff;
+  --ship-color: #f7f7f7;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top, #102240 0%, #02070f 60%, #000000 100%);
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background {
+  position: absolute;
+  width: 200%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.layer1 {
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 25%),
+    linear-gradient(180deg, rgba(10, 20, 45, 0.8) 0%, rgba(2, 7, 15, 0.95) 100%);
+  background-size: 5% 5%, cover;
+  opacity: 0.5;
+}
+
+.layer2 {
+  background-image: radial-gradient(circle, rgba(124,224,255,0.8) 0%, rgba(124,224,255,0) 10%);
+  background-size: 150px 150px;
+  opacity: 0.3;
+}
+
+.layer3 {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 8%);
+  background-size: 80px 80px;
+  opacity: 0.6;
+}
+
+.ship {
+  position: absolute;
+  width: 64px;
+  height: 32px;
+  background: linear-gradient(135deg, #f7f7f7 0%, #b0d8ff 100%);
+  border-radius: 20px 20px 10px 10px;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
+  box-shadow: 0 0 24px rgba(135, 214, 255, 0.6);
+}
+
+.ship::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #0cf;
+  border-radius: 50%;
+  top: 8px;
+  left: 10px;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.8);
+}
+
+.ship::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: rgba(255,255,255,0.8);
+  border-radius: 4px;
+  top: 10px;
+  right: 10px;
+}
