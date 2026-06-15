@@ -122,12 +122,17 @@ body, html {
   box-shadow: 0 0 24px rgba(0, 128, 180, 0.12);
 }
 
-.hud-left {
-  flex: 1 1 180px;
+.hud-charge-panel {
+  flex: 2 1 320px;
 }
 
-.hud-center {
-  flex: 2 1 320px;
+.hud-score {
+  flex: 1 1 160px;
+  text-align: right;
+}
+
+.hud-left {
+  flex: 1 1 180px;
 }
 
 .hud-right {
@@ -149,37 +154,67 @@ body, html {
   font-weight: 700;
 }
 
+.hud-bar-container {
+  position: relative;
+  width: 100%;
+}
+
 .hud-bar {
   width: 100%;
-  height: 12px;
+  height: 16px;
   background: rgba(255, 255, 255, 0.07);
   border-radius: 999px;
   overflow: hidden;
+  position: relative;
 }
 
 .hud-fill {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #54f6ff, #0fd0ff);
-  transition: width 0.1s ease-out;
+  background: linear-gradient(90deg, #FFD700, #FFD700);
+  transition: width 0.08s ease-out, background 0.1s ease-out, box-shadow 0.1s ease-out;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+}
+
+.hud-fill[data-charge-state="yellow"] {
+  background: linear-gradient(90deg, #FFD700, #FFC700);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+}
+
+.hud-fill[data-charge-state="red"] {
+  background: linear-gradient(90deg, #FF5544, #FF3333);
+  box-shadow: 0 0 16px rgba(255, 85, 68, 0.7);
+}
+
+.hud-fill[data-charge-state="green"] {
+  background: linear-gradient(90deg, #4FFF4F, #2FFF2F);
+  box-shadow: 0 0 20px rgba(79, 255, 79, 0.9);
+}
+
+.hud-fill[data-charge-state="bright"] {
+  background: linear-gradient(90deg, #7FFFFF, #4FFFFF);
+  box-shadow: 0 0 28px rgba(127, 255, 255, 1), inset 0 0 16px rgba(127, 255, 255, 0.5);
 }
 
 .hud-status {
-  font-size: 0.95rem;
-  color: #97d6ff;
+  position: absolute;
+  bottom: 16px;
+  right: 12px;
+  font-size: 0.85rem;
   font-weight: 700;
+  letter-spacing: 0.1em;
+  color: transparent;
+  text-shadow: 0 0 8px currentColor;
+  pointer-events: none;
 }
 
-.hud-status.ready {
-  color: #86ffb0;
+.hud-status[data-state="ready"] {
+  color: #4FFF4F;
+  text-shadow: 0 0 12px #4FFF4F;
 }
 
 .hud-text {
   font-size: 0.9rem;
   color: #bedcff;
   line-height: 1.6;
-}
-
-.hud-bottom .hud-panel {
-  min-width: 220px;
 }

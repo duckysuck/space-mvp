@@ -144,16 +144,27 @@ window.addEventListener('keyup', (event) => {
 });
 
 function updateHud() {
-  scoreValue.textContent = state.score.toString().padStart(4, '0');
+  scoreValue.textContent = state.score.toString().padStart(6, '0');
   const chargePercent = Math.min(100, (state.charge / state.config.weapon.charge_max) * 100);
+  
+  let chargeState = 'yellow';
+  if (chargePercent >= 66) {
+    chargeState = 'bright';
+  } else if (chargePercent >= 33) {
+    chargeState = 'red';
+  }
+  
   chargeFill.style.width = `${chargePercent}%`;
+  chargeFill.setAttribute('data-charge-state', chargeState);
+  
   healthFill.style.width = `${Math.max(0, (state.health / state.config.hud.health_max) * 100)}%`;
+  
   if (state.charge >= state.config.weapon.charge_max) {
-    weaponReady.textContent = state.config.hud.charge_ready_text;
-    weaponReady.classList.add('ready');
+    weaponReady.textContent = 'READY';
+    weaponReady.setAttribute('data-state', 'ready');
   } else {
-    weaponReady.textContent = state.config.hud.charge_charging_text;
-    weaponReady.classList.remove('ready');
+    weaponReady.textContent = '';
+    weaponReady.removeAttribute('data-state');
   }
 }
 

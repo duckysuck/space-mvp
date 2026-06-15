@@ -14,17 +14,16 @@
     <div class="ship" id="ship"></div>
     <div class="hud">
       <div class="hud-row hud-top">
-        <div class="hud-panel hud-left">
+        <div class="hud-panel hud-charge-panel">
+          <div class="hud-label">CHARGE</div>
+          <div class="hud-bar-container">
+            <div class="hud-bar"><div class="hud-fill" id="chargeFill"></div></div>
+            <div class="hud-status" id="weaponReady"></div>
+          </div>
+        </div>
+        <div class="hud-panel hud-score">
           <div class="hud-label">SCORE</div>
           <div class="hud-value" id="scoreValue">0</div>
-        </div>
-        <div class="hud-panel hud-center">
-          <div class="hud-label">CHARGE</div>
-          <div class="hud-bar"><div class="hud-fill" id="chargeFill"></div></div>
-        </div>
-        <div class="hud-panel hud-right">
-          <div class="hud-label">BIG WEAPON</div>
-          <div class="hud-status" id="weaponReady">CHARGING</div>
         </div>
       </div>
       <div class="hud-row hud-bottom">
