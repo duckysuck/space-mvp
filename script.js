@@ -1,9 +1,13 @@
 const ship = document.getElementById('ship');
 const layers = document.querySelectorAll('.background');
 const scoreValue = document.getElementById('scoreValue');
-const chargeFill = document.getElementById('chargeFill');
+const chargeSegments = document.getElementById('chargeSegments');
+const chargeIcons = document.getElementById('chargeIcons');
+const chargeBadge = document.getElementById('chargeBadge');
 const healthFill = document.getElementById('healthFill');
-const weaponReady = document.getElementById('weaponReady');
+
+const TOTAL_CHARGE_SEGMENTS = 20;
+const COLOR_SPECTRUM = ['blue', 'blue', 'blue', 'blue', 'blue', 'purple', 'purple', 'purple', 'pink', 'pink', 'pink', 'orange', 'orange', 'orange', 'yellow', 'yellow', 'yellow', 'yellow', 'yellow', 'yellow'];
 
 const defaultConfig = {
   movement: {
@@ -99,6 +103,7 @@ async function loadConfig() {
     state.config = defaultConfig;
   }
   initializeControls();
+  initializeHud();
 }
 
 function initializeControls() {
@@ -109,6 +114,25 @@ function initializeControls() {
     [state.config.controls.right]: false,
     [state.config.controls.fire]: false,
   };
+}
+
+function initializeHud() {
+  chargeSegments.innerHTML = '';
+  for (let i = 0; i < TOTAL_CHARGE_SEGMENTS; i++) {
+    const segment = document.createElement('div');
+    segment.className = 'hud-charge-segment';
+    segment.setAttribute('data-index', i);
+    chargeSegments.appendChild(segment);
+  }
+  
+  chargeIcons.innerHTML = '';
+  for (let i = 0; i < 3; i++) {
+    const icon = document.createElement('div');
+    icon.className = 'hud-charge-icon';
+    icon.setAttribute('data-index', i);
+    chargeIcons.appendChild(icon);
+  }
+}
 }
 
 window.addEventListener('resize', () => {
@@ -146,26 +170,42 @@ window.addEventListener('keyup', (event) => {
 function updateHud() {
   scoreValue.textContent = state.score.toString().padStart(6, '0');
   const chargePercent = Math.min(100, (state.charge / state.config.weapon.charge_max) * 100);
+  const segmentsFilled = Math.floor((chargePercent / 100) * TOTAL_CHARGE_SEGMENTS);
   
-  let chargeState = 'yellow';
-  if (chargePercent >= 66) {
-    chargeState = 'bright';
-  } else if (chargePercent >= 33) {
-    chargeState = 'red';
-  }
+  // Update charge segments
+  const segments = chargeSegments.querySelectorAll('.hud-charge-segment');
+  segments.forEach((segment, index) => {
+    if (index < segmentsFilled) {
+      segment.classList.add('filled');
+      const color = COLOR_SPECTRUM[Math.min(index, COLOR_SPECTRUM.length - 1)];
+      segment.setAttribute('data-color', color);
+    } else {
+      segment.classList.remove('filled');
+      segment.removeAttribute('data-color');
+    }
+  });
   
-  chargeFill.style.width = `${chargePercent}%`;
-  chargeFill.setAttribute('data-charge-state', chargeState);
+  // Update weapon icons - activate them as charge fills
+  const iconsPerWeapon = TOTAL_CHARGE_SEGMENTS / 3;
+  const icons = chargeIcons.querySelectorAll('.hud-charge-icon');
+  icons.forEach((icon, index) => {
+    const threshold = (index + 1) * iconsPerWeapon;
+    if (segmentsFilled >= threshold) {
+      icon.classList.add('active');
+    } else {
+      icon.classList.remove('active');
+    }
+  });
   
-  healthFill.style.width = `${Math.max(0, (state.health / state.config.hud.health_max) * 100)}%`;
-  
+  // Update MAX badge
   if (state.charge >= state.config.weapon.charge_max) {
-    weaponReady.textContent = 'READY';
-    weaponReady.setAttribute('data-state', 'ready');
+    chargeBadge.classList.add('ready');
   } else {
-    weaponReady.textContent = '';
-    weaponReady.removeAttribute('data-state');
+    chargeBadge.classList.remove('ready');
   }
+  
+  // Update health bar
+  healthFill.style.width = `${Math.max(0, (state.health / state.config.hud.health_max) * 100)}%`;
 }
 
 let last = performance.now();
