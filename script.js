@@ -133,7 +133,7 @@ function initializeHud() {
     chargeIcons.appendChild(icon);
   }
 }
-}
+ 
 
 window.addEventListener('resize', () => {
   state.startX = window.innerWidth * 0.1;
